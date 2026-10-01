@@ -4,7 +4,7 @@
 // If the file is not connected yet, submissions wait safely inside the browser and are
 // written into the .txt file the next time the admin connects it.
 
-import { notify } from './mail.js';
+import { notify, explain } from './mail.js';
 import { ASK_FOR_FILE_ON_FIRST_SUBMIT, FILE_NAME, SAVE_TO_FILE } from './config.js';
 
 const DB_NAME = 'avkas-store';
@@ -119,12 +119,13 @@ export async function save(record) {
   const full = { _id: crypto.randomUUID(), createdAt: new Date().toISOString(), ...record };
   if (!SAVE_TO_FILE) {
     // online version: the email is the only copy, so a failed email must be reported to the visitor
-    if (!(await notify(full))) throw new Error('Sorry, we could not send your message right now. Please check your connection and try again.');
+    const r = await notify(full);
+    if (!r.ok) throw new Error(explain(r));
     return { where: 'email', emailed: true };
   }
   const mailed = notify(full); // runs in parallel with saving; never throws
   const out = await saveLocally(full);
-  out.emailed = await mailed;
+  out.emailed = (await mailed).ok;
   return out;
 }
 

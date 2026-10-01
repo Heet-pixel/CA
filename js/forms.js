@@ -42,7 +42,7 @@ export function mountContactForm(el) {
       <label>Full Name<input name="name" autocomplete="name" required></label>
       <label>Your Mobile Number<input name="phone" type="tel" autocomplete="tel" inputmode="tel" required></label>
       <label>Your Email (optional)<input name="email" type="email" autocomplete="email" inputmode="email"></label>
-      <label>Your Message<textarea name="message" rows="6" required></textarea></label>
+      <label>Your Message (optional)<textarea name="message" rows="6"></textarea></label>
       <p class="msg-line" role="alert" aria-live="polite"></p>
       <button class="btn block" type="submit">Send Message</button>
     </form>`;
@@ -56,7 +56,6 @@ export function mountContactForm(el) {
       if (v('name').length < 2) return 'Enter your name.';
       if (!phoneOk(v('phone'))) return 'Enter a valid mobile number so we can contact you.';
       if (v('email') && !emailOk(v('email'))) return 'Enter a valid email address or leave it empty.';
-      if (v('message').length < 10) return 'Write at least 10 characters in your message.';
     },
     build: (f) => {
       const v = (n) => f.elements[n].value.trim();
