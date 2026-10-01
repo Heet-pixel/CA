@@ -1,0 +1,7 @@
+{
+  "name": "avkas-online-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static website. Contact messages and job applications are emailed (FormSubmit). No server, no database.",
+  "scripts": { "start": "npx --yes serve . -l 3000 --no-clipboard" }
+}

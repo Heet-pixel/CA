@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: avkas-website
+    runtime: static
+    staticPublishPath: .
